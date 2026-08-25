@@ -4,8 +4,10 @@
 [![GitHub Forks](https://img.shields.io/github/forks/cloud65/email2tg?style=flat-square)](https://github.com/cloud65/email2tg/network/members)
 [![GitHub Issues](https://img.shields.io/github/issues/cloud65/email2tg?style=flat-square)](https://github.com/cloud65/email2tg/issues)
 [![License](https://img.shields.io/github/license/cloud65/email2tg?style=flat-square)](LICENSE)
-[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-ready-326CE5?style=flat-square&logo=kubernetes&logoColor=white)](manifest-example.yaml)
+
 
 <img height="128" src="./logo/logo1024.png" title="email2image" width="128"/>
 
