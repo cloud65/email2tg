@@ -1,0 +1,93 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mail-notify
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mail-telegram-notify
+  namespace: mail-notify
+type: Opaque
+stringData:
+  IMAP_PASSWORD: ""
+  TELEGRAM_TOKEN: ""
+  TELEGRAM_CHAT_ID: ""
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mail-telegram-notify
+  namespace: mail-notify
+data:
+  IMAP_HOST: ""
+  IMAP_PORT: "993"
+  IMAP_USER: ""
+  POLL_INTERVAL: "30"
+  SOCKS5_PROXY: ""
+  DB_PATH: "/data/state.db"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mail-telegram-notify
+  namespace: mail-notify
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 64Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-telegram-notify
+  namespace: mail-notify
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mail-telegram-notify
+  template:
+    metadata:
+      labels:
+        app: mail-telegram-notify
+    spec:
+      securityContext:
+        fsGroup: 10001
+
+      containers:
+        - name: notifier
+          image: docker.io/cloud65/mail2tg:arm64
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: mail-telegram-notify
+            - secretRef:
+                name: mail-telegram-notify
+
+          volumeMounts:
+            - name: state
+              mountPath: /data
+
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: mail-telegram-notify

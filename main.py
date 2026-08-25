@@ -31,6 +31,7 @@ RECONNECT_DELAY = int(os.environ.get("RECONNECT_DELAY", "10"))
 
 DB_PATH = os.environ.get("DB_PATH", "state.db")
 
+HEALTH_FILE = os.environ.get("HEALTH_FILE", "/tmp/email2tg-health")
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -46,7 +47,12 @@ logger = logging.getLogger("mail-telegram-notify")
 # ---------------------------------------------------------------------------
 # Database
 # ---------------------------------------------------------------------------
-
+def update_health():
+    try:
+        with open(HEALTH_FILE, "w") as f:
+            f.write(str(int(time.time())))
+    except Exception:
+        logger.exception("Unable to update health file")
 
 def init_db():
     path = os.path.dirname(DB_PATH)
@@ -455,6 +461,9 @@ def main():
             conn = connect()
             while True:
                 check_mail(conn, db)
+
+                update_health()
+
                 status, _ = conn.noop()
                 if status != "OK":
                     raise RuntimeError(f"IMAP NOOP failed: {status}")
