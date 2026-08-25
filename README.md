@@ -1,4 +1,4 @@
-# email2tg
+# **email2tg**:  Email notifications to Telegram.
 
 [![GitHub Stars](https://img.shields.io/github/stars/cloud65/email2tg?style=flat-square)](https://github.com/cloud65/email2tg/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/cloud65/email2tg?style=flat-square)](https://github.com/cloud65/email2tg/network/members)
@@ -9,7 +9,7 @@
 
 <img height="128" src="./logo/logo1024.png" title="email2image" width="128"/>
 
-# **Email notifications to Telegram.**
+
 
 `email2tg` is a lightweight service that monitors an IMAP mailbox and sends notifications about new emails to a Telegram chat.
 
